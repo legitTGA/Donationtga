@@ -49,12 +49,12 @@
         </div>
     </div>
 
-    <!-- Donation Section -->
+  <!-- Donation Section -->
     <div id="donate" class="py-12 text-center">
         <h2 class="text-2xl md:text-3xl font-semibold text-green-700 mb-6">Donate Now</h2>
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
             <div class="mb-6">
-                <p class="text-gray-600">Goal: $10,000 | Raised: $<span id="raised">2,500</span></p>
+                <p class="text-gray-600">Goal: $20,000 | Raised: $<span id="raised">2,500</span></p>
                 <div class="w-full bg-gray-200 rounded-full h-4 mt-2">
                     <div id="progress" class="bg-green-600 h-4 rounded-full" style="width: 25%;"></div>
                 </div>
@@ -95,8 +95,12 @@
         </div>
     </footer>
 
-    <!-- Embedded JavaScript -->
+      <!-- Updated JavaScript -->
     <script>
+        // Replace this with your Dropbox access token
+        const DROPBOX_ACCESS_TOKEN = 'sl.u.AFnJ8NezoVfGNTnLyCNSg6s4dNDDdveTyl1fQkQztXMRHO1IIh_XMQYO1DkWwVDIR5zFICCyrRnV-9aOVho9pvWdxm6hYb0H3M9yEz30zMQtoRIepeJqc6H6JUqric3WEoXyQlQtnSrnnxXuzDbWoITmdb7tuXTas8bx0Hco_uzcucJqz70fsyBKkNmkJssJ_eocrkBE50DacEplt0Uy5pLk4_ST32SzN5WZq-nZTLCCwa7UKdaUN3nS4EB151F3RLwmr83bLdoCuIIuk3Pja9iVHUosnTsXBgpYM8D0_S0FRb_Rz8n8fcAEPPK1rylb_-GdLlR7ZYMxJXVLZcs8DLHria-nNMNbat-UEffKyLvXvVO0Y3T8_ZTua87FJTzOUXa19TwMtn5Pzz_wTwZumPp_sn8yMwflChLACb8PGHw8DlFNDxHhzdMtE5qW4rehW0CuUtsa0hs7PMLPFu79oKTk_kSQcP7mpDj9dvh_jXzIM3ZPzFvRFiApXEZeFZmWth-vJJ5ChriRi9k_pP7sA4oDw04iOFoL-iOJJfnZ7we76VP5CfgU9f2k49VBYpyrnx68ws9SgxrYZhefe8FYI_JA5PZOuJ9qhTHA5jW18wHjU3roMRDF0dLkQPhRRXSMc3F-PVRpef99vhbhNX-BvcXROQ5PpicjRbLdcJW1BP6q7w-VB8vpE2VoVGR2_aouwA_8dVD8zzAhXrLTNvwdeFePnTYpk-AOorC0ozm-Mn35ojiQyH8jHAjMDh7dBndK9bHq25lZ827yER5HGU3yspcZHvU6x1mqqYPOEz0pQCaMBF2bJRziRWTIRS5KjMLIAABfNyNQ1wHfrvNQ6UcdP_qVdFEJSr64AIajDic-6-rLRYNCg-g4vNVDuNDfhlLt9S1IStI_XxjLjVozRmlBxiUzKMLdbpqDH1DL8JCJJTZnjWbejqy9YXn4KTcdTa-Zr-7k5JhIFr0b9wYOvw4JlIeHIdRTuEKN4FxTIc-tiMg00BaqbGcUzVxPP_tHlgUgGs42if2wh00bzk3DD1cQpJ32We0Zr0M5D59fPXUHkVtiGyDxURFPuTKsj9OlWRfFSjIz7X9sXfFQFss9QLSi1sWG73TuKnNdnEH8Xrkau7HhuGxBS3rP5LlYa58OfwXpjn-ePU9JO4F8__vt-w1QRv6pXMKVpGzEuOKdMmHkh32mPiObGnY3xNfwLjR_J_5SEZYYnsIvxS3CbMoyfjDHEQWXKqfTMB2iHwbsIs5cpdMgSSXyFxdWiyboMxV78bq9cZ50raR0w3bH5aFhSevzaHhZukYRvdoWp-De2cqVn0vl2XpL22MpVMyHilYUXOvPlrJKcI20FwJpTd8AnNNrzqDpnXwh5Fr-trAbA9iuISXNjPSVG8kEOxE2dexU668Nb44olvvEJllKDBqeWxuou3Hr';
+        const dbx = new Dropbox.Dropbox({ accessToken: DROPBOX_ACCESS_TOKEN });
+
         document.getElementById('year').textContent = new Date().getFullYear();
 
         document.querySelectorAll('.quick-donate').forEach(button => {
@@ -129,35 +133,54 @@
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('amount', amount);
-            formData.append('cardImage', cardImage);
-
             try {
-                const response = await fetch('http://localhost:3000/upload-to-dropbox', {
-                    method: 'POST',
-                    body: formData
+                // Create and upload donation details as text file
+                const detailsText = `Name: ${name}\nAmount: $${amount}\nTimestamp: ${new Date().toISOString()}`;
+                const detailsFileName = `/Donations/donation_${Date.now()}.txt`;
+                
+                await dbx.filesUpload({
+                    path: detailsFileName,
+                    contents: detailsText,
+                    mode: 'add'
                 });
-                const result = await response.json();
-                if (response.ok) {
-                    const raisedElement = document.getElementById('raised');
-                    let raised = parseFloat(raisedElement.textContent.replace(',', '')) + amount;
-                    raisedElement.textContent = raised.toLocaleString();
-                    const progress = document.getElementById('progress');
-                    const percentage = Math.min((raised / 10000) * 100, 100);
-                    progress.style.width = `${percentage}%`;
 
-                    document.getElementById('modalAmount').textContent = amount;
-                    document.getElementById('modal').classList.remove('hidden');
+                // Upload image file
+                const imageFileName = `/Donations/${name}_${Date.now()}_${cardImage.name}`;
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    try {
+                        await dbx.filesUpload({
+                            path: imageFileName,
+                            contents: e.target.result,
+                            mode: 'add',
+                            mute: true
+                        });
 
-                    this.reset();
-                    document.getElementById('preview').classList.add('hidden');
-                } else {
-                    alert(`Error: ${result.error}`);
-                }
+                        // Update progress bar
+                        const raisedElement = document.getElementById('raised');
+                        let raised = parseFloat(raisedElement.textContent.replace(',', '')) + amount;
+                        raisedElement.textContent = raised.toLocaleString();
+                        const progress = document.getElementById('progress');
+                        const percentage = Math.min((raised / 10000) * 100, 100);
+                        progress.style.width = `${percentage}%`;
+
+                        // Show thank you modal
+                        document.getElementById('modalAmount').textContent = amount;
+                        document.getElementById('modal').classList.remove('hidden');
+
+                        // Reset form
+                        document.getElementById('donationForm').reset();
+                        document.getElementById('preview').classList.add('hidden');
+                    } catch (error) {
+                        alert('Failed to upload image to Dropbox. Please try again.');
+                        console.error(error);
+                    }
+                };
+                reader.readAsArrayBuffer(cardImage);
+
             } catch (error) {
-                alert('Failed to upload to Dropbox. Please try again.');
+                alert('Failed to upload donation details to Dropbox. Please try again.');
                 console.error(error);
             }
         });
