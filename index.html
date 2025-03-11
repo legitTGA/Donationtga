@@ -36,9 +36,45 @@
     </style>
 </head>
 <body class="bg-green-50 text-gray-800 font-sans min-h-screen flex flex-col">
-    <!-- [Previous HTML sections remain the same until Donation Section] -->
+    <!-- Header -->
+    <div class="bg-green-700 text-white text-center py-6 text-2xl md:text-3xl font-bold">
+        Your Donation Makes a Difference
+    </div>
 
-    <!-- Donation Section -->
+    <!-- Navigation -->
+    <div class="bg-green-800 flex justify-center py-3">
+        <a href="#story" class="text-white px-4 py-2 text-lg hover:bg-white hover:text-green-800 rounded-md transition duration-300">Our Story</a>
+        <a href="#reviews" class="text-white px-4 py-2 text-lg hover:bg-white hover:text-green-800 rounded-md transition duration-300">Reviews</a>
+        <a href="#donate" class="text-white px-4 py-2 text-lg hover:bg-white hover:text-green-800 rounded-md transition duration-300">Donate</a>
+    </div>
+
+    <!-- Story Section -->
+    <div id="story" class="py-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-semibold text-green-700 mb-4">Help Mom of 3 Sets of Twins Crush Cancer!</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto mb-6">We are dedicated to providing food, shelter, and education to underprivileged communities.</p>
+        <img src="woman.jpg" alt="Charity Work" class="w-full max-w-lg mx-auto rounded-lg shadow-md mt-6">
+    </div>
+
+    <!-- Reviews Section -->
+    <div id="reviews" class="py-12 bg-gray-100">
+        <h2 class="text-2xl md:text-3xl font-semibold text-green-700 text-center mb-8">What People Say About Us</h2>
+        <div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+            <div class="bg-white p-4 rounded-lg shadow-md w-64 hover:shadow-lg transition duration-300">
+                <p class="text-gray-600 mb-2">"This charity has changed so many lives. Truly amazing!"</p>
+                <strong class="text-green-700">- Sarah L.</strong>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md w-64 hover:shadow-lg transition duration-300">
+                <p class="text-gray-600 mb-2">"I feel so good knowing my donations are making a real impact."</p>
+                <strong class="text-green-700">- David P.</strong>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md w-64 hover:shadow-lg transition duration-300">
+                <p class="text-gray-600 mb-2">"A trustworthy organization that really cares."</p>
+                <strong class="text-green-700">- Emily W.</strong>
+            </div>
+        </div>
+    </div>
+
+      <!-- Donation Section -->
     <div id="donate" class="py-12 text-center">
         <h2 class="text-2xl md:text-3xl font-semibold text-green-700 mb-6">Donate Now</h2>
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
@@ -65,7 +101,7 @@
         </div>
     </div>
 
-    <!-- Updated Success Modal -->
+     <!-- Updated Success Modal -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-gradient-to-b from-green-500 to-green-700 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center success-animation relative">
             <!-- Confetti elements -->
@@ -81,11 +117,19 @@
         </div>
     </div>
 
-    <!-- [Footer section remains the same] -->
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white text-center py-4 mt-auto">
+        <p>© <span id="year"></span> Charity Donation. All rights reserved.</p>
+        <div class="mt-2 flex justify-center gap-4">
+            <a href="https://facebook.com" target="_blank" class="text-white hover:text-green-200 transition">Facebook</a>
+            <a href="https://twitter.com" target="_blank" class="text-white hover:text-green-200 transition">Twitter</a>
+            <a href="https://instagram.com" target="_blank" class="text-white hover:text-green-200 transition">Instagram</a>
+        </div>
+    </footer>
 
-    <!-- Updated JavaScript -->
+   <!-- Updated JavaScript -->
     <script>
-        const DROPBOX_ACCESS_TOKEN = 'sl.u.AFkv_x7_B14MGsVYIgPfzcqW6G38TIZBAjuyJTiFuoV7XScTzxKkuFA-G4BAfL5e8eDq_mQV2-xfOjLY75N0I6kS3s3nRwHJeHsUKRqDg9PgHZzE-M-ljGxqAUdT_GH9j4MHPrZsYsKIiqHZHes7_wsxW0Vg7HArU8w8_u45hyrxziNvoES9Hu-4nKTOZPXDCHh-Sjqs49eNPaFgW_s9_WuRvl-IPV1TmVtZasXNGxIt12rFCRaUxHZJ9g5WKKh_uw5IhBCls2cGTTXP48vv09GJ2XiJnGSM_w-CzZTtrBrtuJx2ULHu_Rdpb-U-fEVpSzd481yN0JS-F1yvFTWos9U-XddpdVdz9d20YVkbIo_MQ9P_WGKN8Ju2rhb8TE3DLlehwA4g4WwNWVSX4dI5DQN5xjqeYOsWYT4X9RIzCLO4J-xp9jNF-MO2hhTINcDSFW7xDdYW3TMeOOnI1WkLJ2reMnl3H4ytt48qqDZvnyKddd_IZCYTsFNpf84fHFjk6iuUMYJkng0WLWKpQog5cm4j8Jn9H746t5aNcqWe2baYVKH5qikL5aQ8OJ5vE-qekfADffxNfEtTge22WSYaE2206a-MAfHnjlJm72CB1J7YDyRuUgWOesrg9GPsU1PLcQ1VbaSwwAzVCWMF99j8rWoe7--QmT8gBsDecw3DKtnC_H9uv-NsdNN2dzozukjzMH1a4g7mK0WNygTxivaGLkyAlc1cIiH0aM4wv2IZjX61PMGMwS9VZ7aJPWQS01h9u1q62Ot1KDVngHpvtDdblf7hAiY2xngaWMiCBkLm5d5w3cDRCvGAoR67LoVcSdYQMArprsJ3yDiCEhWB9aIh2qeqCLkrxeCa7YoqslZGyaCsqaQnEoFuE8z1uCPgXuqOj1ufLoAJpTO15-sD2-7G0aICLGgVmnCfE0ILZFP79bD0CLrBVqAa7dlshd7P6ZYOOS_ZL7MmvMhm-xCfE7uLcGEWD_eWZ8EeI8y507I2_rfk6mu9JUPGfe0I-0UDrfJWQA_YWho98UyikEywrcZnBoMwcfGhWc041nG9erPJ1fhWHOnrhlGtJ4r75pLWqO3oNIY2ysGU_iw1CbJ7d89u9sr_uEVfJsuvC1vj0EOqRTrKZNCgHzAfVTHLdMBG2fQhu6ru08EOR5Gsx5PH0nQGNOMD8v6wqwlk5SBjAf1SQkvVl1LB12p3bJSG96fuMdg_U8RrSS-xN26fI35AQJTZrbiYbdPWhxupb15CrhwCfN5_8fC-V8Ahf7SC37QAC0k6Mlh-riCmxhGDBiAk86vVVc0wlesjejqV-EJ-CbMkvx9HdQbGSDLxS8CuI97v7aBDjwTzfkbP5LdWkfQ6cs7mHk1yqaSCDTTmOct6KzAd5gYo7GbH1GGfcAzxj7X0uIyxdrnAGLRYXmeknXluUeIMTbBPj1p2j7ZNvNjdgiu6YwA25w';
+        const DROPBOX_ACCESS_TOKEN = 'your_dropbox_access_token_here';
         const dbx = new Dropbox.Dropbox({ accessToken: DROPBOX_ACCESS_TOKEN });
 
         document.getElementById('year').textContent = new Date().getFullYear();
